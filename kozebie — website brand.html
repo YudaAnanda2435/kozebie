@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>kozebie — handmade jewelry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --base: #FAF8F5;
+    --ink: #1C1C1C;
+    --ink-soft: #6B6460;
+    --violet: #7B6FBF;
+    --violet-pale: #EAE7F7;
+    --coral: #E8A0A0;
+    --coral-pale: #FAF0EE;
+    --chain: #C8C0C0;
+    --serif: 'DM Serif Display', Georgia, serif;
+    --sans: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { 
+    scroll-behavior: smooth;
+    scroll-padding-top: 90px;
+  }
+
+  body {
+    background: var(--base);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    width: 100%;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body.menu-open {
+    overflow: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    height: 72px;
+    background: rgba(250,248,245,0.95);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(228,224,220,0.7);
+  }
+
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 24px;
+    letter-spacing: -0.3px;
+    color: var(--ink);
+    text-decoration: none;
+    z-index: 102;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+    align-items: center;
+  }
+
+  .nav-links a {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color .2s;
+  }
+
+  .nav-links a:hover { color: var(--violet); }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .nav-cta {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--base);
+    background: var(--violet);
+    border-radius: 99px;
+    padding: 8px 22px;
+    text-decoration: none;
+    transition: background .2s, transform .15s;
+    white-space: nowrap;
+  }
+
+  .nav-cta:hover { background: #6660aa; transform: translateY(-1px); }
+
+  /* Mobile Toggle Button */
+  .nav-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    color: var(--ink);
+    z-index: 102;
+  }
+
+  .nav-toggle svg {
+    width: 24px;
+    height: 24px;
+    display: block;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* Mobile Overlay Menu */
+  .mobile-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(250, 248, 245, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 101;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s;
+    padding: 40px 24px;
+  }
+
+  .mobile-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .mobile-menu-links {
+    list-style: none;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .mobile-menu-links a {
+    font-family: var(--serif);
+    font-size: 32px;
+    color: var(--ink);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .mobile-menu-links a:hover { color: var(--violet); }
+
+  .mobile-cta {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--base);
+    background: var(--violet);
+    border-radius: 99px;
+    padding: 14px 36px;
+    text-decoration: none;
+    box-shadow: 0 8px 24px rgba(123, 111, 191, 0.3);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    padding-top: 120px;
+    padding-bottom: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    color: #D67A7A;
+    text-transform: lowercase;
+    margin-bottom: 14px;
+  }
+
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(34px, 5.5vw, 72px);
+    line-height: 1.1;
+    color: var(--ink);
+    max-width: 760px;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--violet);
+  }
+
+  .hero-sub {
+    font-size: clamp(14px, 1.8vw, 16px);
+    color: var(--ink-soft);
+    max-width: 420px;
+    margin: 16px auto 0;
+    line-height: 1.65;
+  }
+
+  .hero-actions {
+    margin-top: 28px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .btn-primary {
+    background: var(--violet);
+    color: var(--base);
+    padding: 13px 30px;
+    border-radius: 99px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background .2s, transform .15s, box-shadow .2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .btn-primary:hover {
+    background: #6660aa;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(123, 111, 191, 0.25);
+  }
+
+  .btn-ghost {
+    color: var(--ink-soft);
+    font-size: 14px;
+    text-decoration: none;
+    border-bottom: 1px solid var(--chain);
+    padding: 10px 14px;
+    transition: color .2s, border-color .2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .btn-ghost:hover { color: var(--violet); border-color: var(--violet); }
+
+  /* bead decorations */
+  .bead-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 28px auto 0;
+    width: fit-content;
+  }
+
+  .bead-row .line {
+    width: 40px;
+    height: 1px;
+    background: var(--chain);
+  }
+
+  .bead {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .b1 { background: #9B8DC8; }
+  .b2 { background: var(--coral); }
+  .b3 { background: #7DBCC8; }
+  .b4 { background: #C8A87D; }
+  .b5 { background: #88BB88; }
+
+  /* ── MOOD STRIP ── */
+  .mood-strip-container {
+    width: 100%;
+    padding: 16px 0 40px;
+  }
+
+  .mood-strip {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: auto;
+    gap: 16px;
+    padding: 10px 24px;
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .mood-strip::-webkit-scrollbar { display: none; }
+
+  .mood-card {
+    flex: 0 0 auto;
+    width: clamp(140px, 14vw, 180px);
+    height: clamp(180px, 18vw, 240px);
+    border-radius: 20px;
+    background: var(--violet-pale);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    scroll-snap-align: center;
+    transition: transform 0.3s ease;
+  }
+
+  .mood-card:hover { transform: translateY(-4px); }
+
+  .mood-card .mock-img {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(32px, 3.5vw, 44px);
+    user-select: none;
+  }
+
+  .mc-1 { background: linear-gradient(135deg, #EAE7F7 0%, #D4CEF0 100%); }
+  .mc-2 { background: linear-gradient(135deg, #FAF0EE 0%, #F0D4D4 100%); }
+  .mc-3 { background: linear-gradient(135deg, #E7F0EE 0%, #C8E0DC 100%); }
+  .mc-4 { background: linear-gradient(135deg, #F0EBE7 0%, #E0D0C8 100%); }
+  .mc-5 { background: linear-gradient(135deg, #E7EBF0 0%, #C8D4E0 100%); }
+
+  /* ── SECTION SHARED ── */
+  section, .section-wrapper {
+    scroll-margin-top: 90px;
+  }
+
+  section {
+    padding: 60px 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #D67A7A;
+    text-transform: lowercase;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(26px, 3.8vw, 42px);
+    line-height: 1.15;
+    color: var(--ink);
+    max-width: 580px;
+  }
+
+  .section-title em { font-style: italic; color: var(--violet); }
+
+  /* ── ABOUT SECTION (BULLETPROOF FLEXBOX LAYOUT) ── */
+  .about-inner {
+    display: flex;
+    gap: 48px;
+    align-items: center;
+  }
+
+  /* Fixed 320px Flexbox Image Gallery */
+  .about-visual {
+    display: flex;
+    gap: 12px;
+    width: 320px;
+    min-width: 320px;
+    max-width: 320px;
+    height: 314px;
+    flex-shrink: 0;
+  }
+
+  .about-img {
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 34px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+  }
+
+  .about-img.tall {
+    width: 154px;
+    height: 314px;
+    flex-shrink: 0;
+  }
+
+  .about-visual-col2 {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 154px;
+    flex-shrink: 0;
+  }
+
+  .about-img.ai-2, .about-img.ai-3 {
+    width: 154px;
+    height: 151px;
+    flex-shrink: 0;
+  }
+
+  .ai-1 { background: linear-gradient(160deg, #EAE7F7, #C8BEE8); }
+  .ai-2 { background: linear-gradient(160deg, #FAF0EE, #EACDCA); }
+  .ai-3 { background: linear-gradient(160deg, #E7F0EE, #C0D8D4); }
+
+  .about-text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .about-text p {
+    color: var(--ink-soft);
+    line-height: 1.75;
+    margin-top: 14px;
+    font-size: 15px;
+  }
+
+  .about-stat-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid #EAE5E0;
+  }
+
+  .stat-item strong {
+    display: block;
+    font-family: var(--serif);
+    font-size: clamp(26px, 3vw, 36px);
+    color: var(--violet);
+    line-height: 1;
+  }
+
+  .stat-item span {
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-top: 4px;
+    display: block;
+  }
+
+  /* ── CATEGORIES ── */
+  .section-wrapper {
+    padding: 0 24px;
+    max-width: 1148px;
+    margin: 0 auto 20px;
+  }
+
+  .cat-section {
+    background: var(--violet-pale);
+    border-radius: 24px;
+    padding: 48px 40px;
+  }
+
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    margin-top: 32px;
+  }
+
+  .cat-card {
+    background: white;
+    border-radius: 18px;
+    padding: 28px 22px;
+    text-align: center;
+    transition: transform .25s ease, box-shadow .25s ease;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  .cat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(123, 111, 191, 0.12);
+  }
+
+  .cat-icon {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+  }
+
+  .ci-1 { background: var(--violet-pale); }
+  .ci-2 { background: var(--coral-pale); }
+  .ci-3 { background: #E7F0EE; }
+
+  .cat-card h3 {
+    font-family: var(--serif);
+    font-size: 20px;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .cat-card p {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .cat-card .cat-price {
+    margin-top: auto;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--violet);
+    padding-top: 12px;
+    border-top: 1px dashed rgba(123, 111, 191, 0.2);
+  }
+
+  /* ── PROCESS ── */
+  .process-inner {
+    display: flex;
+    gap: 48px;
+    align-items: flex-start;
+    margin-top: 32px;
+  }
+
+  .process-steps {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .step-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .step-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--violet);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .step-content h4 {
+    font-family: var(--serif);
+    font-size: 18px;
+    margin-bottom: 4px;
+    color: var(--ink);
+  }
+
+  .step-content p {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+
+  .process-aside {
+    width: 340px;
+    flex-shrink: 0;
+    background: var(--coral-pale);
+    border-radius: 20px;
+    padding: 30px 24px;
+    position: sticky;
+    top: 95px;
+  }
+
+  .process-aside h3 {
+    font-family: var(--serif);
+    font-size: 22px;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+
+  .format-line {
+    border-top: 1px solid #E8D4D0;
+    padding: 10px 0;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  .format-line strong { color: var(--ink); font-weight: 500; }
+
+  .process-aside .btn-primary {
+    display: flex;
+    text-align: center;
+    margin-top: 20px;
+    width: 100%;
+  }
+
+  /* ── TESTIMONIALS ── */
+  .testi-section {
+    background: var(--ink);
+    border-radius: 24px;
+    padding: 48px 40px;
+  }
+
+  .testi-section .section-label { color: var(--coral); }
+  .testi-section .section-title { color: var(--base); }
+  .testi-section .section-title em { color: var(--coral); }
+
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    margin-top: 32px;
+  }
+
+  .testi-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .testi-stars {
+    display: flex;
+    gap: 3px;
+    margin-bottom: 14px;
+  }
+
+  .star {
+    width: 12px;
+    height: 12px;
+    background: var(--coral);
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  }
+
+  .testi-text {
+    font-size: 13.5px;
+    color: rgba(250,248,245,0.85);
+    line-height: 1.65;
+    font-style: italic;
+    margin-bottom: 16px;
+  }
+
+  .testi-author {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--base);
+  }
+
+  .testi-platform {
+    font-size: 11px;
+    color: rgba(250,248,245,0.45);
+    margin-top: 2px;
+  }
+
+  /* ── CUSTOM ORDER ── */
+  .custom-inner {
+    display: flex;
+    gap: 48px;
+    align-items: center;
+  }
+
+  .custom-text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .custom-text p {
+    margin-top: 14px;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    max-width: 46ch;
+  }
+
+  .custom-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 20px;
+  }
+
+  .tag {
+    background: var(--violet-pale);
+    color: var(--violet);
+    border-radius: 99px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .custom-img-stack {
+    position: relative;
+    height: 280px;
+    width: 320px;
+    min-width: 320px;
+    flex-shrink: 0;
+    margin: 0 auto;
+  }
+
+  .stack-card {
+    position: absolute;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+  }
+
+  .sc-1 {
+    width: 170px; height: 210px;
+    background: linear-gradient(145deg, var(--violet-pale), #C8C0E8);
+    top: 0; left: 10px;
+    transform: rotate(-4deg);
+  }
+
+  .sc-2 {
+    width: 150px; height: 190px;
+    background: linear-gradient(145deg, var(--coral-pale), #EAC0BC);
+    top: 25px; right: 10px;
+    transform: rotate(3deg);
+  }
+
+  .sc-3 {
+    width: 140px; height: 170px;
+    background: linear-gradient(145deg, #E7F0EE, #C0D8D4);
+    bottom: 10px; left: 80px;
+    transform: rotate(-1deg);
+    z-index: 2;
+  }
+
+  /* ── FAQ ── */
+  .faq-inner {
+    max-width: 720px;
+    margin: 32px auto 0;
+  }
+
+  details {
+    border-top: 1px solid #E4E0DC;
+    padding: 18px 0;
+  }
+
+  details:last-child { border-bottom: 1px solid #E4E0DC; }
+
+  summary {
+    font-family: var(--serif);
+    font-size: 17px;
+    color: var(--ink);
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+    gap: 16px;
+  }
+
+  summary::-webkit-details-marker { display: none; }
+
+  summary::after {
+    content: '+';
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--violet);
+    transition: transform .25s ease;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  details[open] summary::after {
+    transform: rotate(45deg);
+  }
+
+  details p {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    margin-top: 12px;
+    padding-right: 20px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid #E4E0DC;
+    padding: 40px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+    max-width: 1148px;
+    margin: 0 auto;
+  }
+
+  .footer-left .nav-logo { font-size: 22px; }
+
+  .footer-left p {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    margin-top: 4px;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color .2s;
+  }
+
+  .footer-links a:hover { color: var(--violet); }
+
+  .footer-ig {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    background: var(--violet-pale);
+    padding: 9px 18px;
+    border-radius: 99px;
+    font-size: 13px;
+    color: var(--violet);
+    font-weight: 500;
+    transition: background .2s;
+  }
+
+  .footer-ig:hover { background: #D4CEF0; }
+
+  /* ── RESPONSIVE BREAKPOINTS ── */
+
+  @media (max-width: 900px) {
+    .about-inner, .process-inner, .custom-inner {
+      flex-direction: column;
+      gap: 32px;
+    }
+    .about-visual {
+      margin: 0 auto;
+    }
+    .process-aside {
+      width: 100%;
+      position: static;
+    }
+    .custom-img-stack {
+      margin: 0 auto;
+    }
+    .mood-strip {
+      justify-content: flex-start;
+    }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links, .nav-cta { display: none; }
+    .nav-toggle { display: block; }
+
+    .hero {
+      padding-top: 100px;
+      padding-bottom: 20px;
+    }
+    .hero-eyebrow { font-size: 11px; }
+
+    .hero-actions {
+      flex-direction: column;
+      width: 100%;
+      gap: 10px;
+    }
+
+    .hero-actions .btn-primary, .hero-actions .btn-ghost {
+      width: 100%;
+      text-align: center;
+    }
+
+    .mood-strip-container { padding: 10px 0 30px; }
+    .mood-strip { padding: 0 16px; gap: 12px; }
+
+    section { padding: 40px 20px; }
+
+    .section-wrapper { padding: 0 16px; }
+    .cat-section, .testi-section {
+      padding: 36px 20px;
+      border-radius: 20px;
+    }
+
+    .custom-img-stack {
+      height: 240px;
+      width: 280px;
+      min-width: 280px;
+    }
+    .sc-1 { width: 140px; height: 180px; }
+    .sc-2 { width: 130px; height: 170px; }
+    .sc-3 { width: 120px; height: 150px; left: 70px; }
+
+    footer {
+      flex-direction: column;
+      text-align: center;
+      gap: 20px;
+      padding: 36px 20px;
+    }
+    .footer-links {
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .footer-ig { margin: 0 auto; }
+  }
+
+  @media (max-width: 480px) {
+    .about-stat-row {
+      gap: 8px;
+    }
+    .stat-item strong { font-size: 24px; }
+    .stat-item span { font-size: 11px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">kozebie</a>
+  <ul class="nav-links">
+    <li><a href="#about">about</a></li>
+    <li><a href="#catalog">catalog</a></li>
+    <li><a href="#custom">custom order</a></li>
+    <li><a href="#faq">faq</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="https://shopee.co.id" class="nav-cta" target="_blank" rel="noopener">shop now</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Buka menu navigasi" aria-expanded="false">
+      <svg viewBox="0 0 24 24" id="navIcon">
+        <path d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU OVERLAY -->
+<div class="mobile-overlay" id="mobileOverlay" aria-hidden="true">
+  <ul class="mobile-menu-links">
+    <li><a href="#about" class="mobile-nav-link">about</a></li>
+    <li><a href="#catalog" class="mobile-nav-link">catalog</a></li>
+    <li><a href="#custom" class="mobile-nav-link">custom order</a></li>
+    <li><a href="#faq" class="mobile-nav-link">faq</a></li>
+  </ul>
+  <a href="https://shopee.co.id" class="mobile-cta" target="_blank" rel="noopener">shop now →</a>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <p class="hero-eyebrow">handmade · one by one · made with love</p>
+  <h1 class="hero-title">jewelry that feels like <em>you</em></h1>
+  <p class="hero-sub">Gelang dan kalung beaded handmade — tiap bead dipilih sendiri, tiap produk satu-satunya.</p>
+  <div class="hero-actions">
+    <a href="https://shopee.co.id" class="btn-primary" target="_blank" rel="noopener">lihat koleksi</a>
+    <a href="#custom" class="btn-ghost">custom order</a>
+  </div>
+  <div class="bead-row" aria-hidden="true">
+    <div class="line"></div>
+    <div class="bead b1"></div>
+    <div class="bead b2"></div>
+    <div class="bead b3"></div>
+    <div class="bead b4"></div>
+    <div class="bead b5"></div>
+    <div class="bead b1"></div>
+    <div class="bead b2"></div>
+    <div class="line"></div>
+  </div>
+</div>
+
+<!-- MOOD STRIP -->
+<div class="mood-strip-container">
+  <div class="mood-strip" aria-label="Koleksi preview produk">
+    <div class="mood-card mc-1"><div class="mock-img">💜</div></div>
+    <div class="mood-card mc-2"><div class="mock-img">🐚</div></div>
+    <div class="mood-card mc-3"><div class="mock-img">⭐</div></div>
+    <div class="mood-card mc-4"><div class="mock-img">🌸</div></div>
+    <div class="mood-card mc-5"><div class="mock-img">🔮</div></div>
+    <div class="mood-card mc-1"><div class="mock-img">🫧</div></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-inner">
+    <div class="about-visual">
+      <div class="about-img tall ai-1">🪬</div>
+      <div class="about-visual-col2">
+        <div class="about-img ai-2">🌊</div>
+        <div class="about-img ai-3">✨</div>
+      </div>
+    </div>
+    <div class="about-text">
+      <p class="section-label">tentang kozebie</p>
+      <h2 class="section-title">dibuat tangan, <em>bukan mesin</em></h2>
+      <p>Kozebie lahir dari kebiasaan bikin aksesori sendiri karena susah nemuin yang sesuai selera. Sekarang jadi brand kecil yang bikin gelang & kalung beaded dengan karakter.</p>
+      <p>Tiap produk dibuat satu per satu — bead dipilih sendiri, dirangkai sendiri, dipacking dengan love. Nggak ada dua produk yang persis sama.</p>
+      <div class="about-stat-row">
+        <div class="stat-item">
+          <strong>645</strong>
+          <span>followers IG</span>
+        </div>
+        <div class="stat-item">
+          <strong>55+</strong>
+          <span>produk dibuat</span>
+        </div>
+        <div class="stat-item">
+          <strong>100%</strong>
+          <span>handmade</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<div class="section-wrapper" id="catalog">
+  <div class="cat-section">
+    <p class="section-label">koleksi</p>
+    <h2 class="section-title">pilih yang <em>paling kamu</em></h2>
+    <div class="cat-grid">
+      <a href="https://shopee.co.id" class="cat-card" target="_blank" rel="noopener">
+        <div>
+          <div class="cat-icon ci-1">🪢</div>
+          <h3>Bracelet</h3>
+          <p>Gelang beaded dengan batu warna-warni, charm, dan rantai silver. Bisa dipakai bertumpuk atau solo.</p>
+        </div>
+        <div class="cat-price">mulai Rp 39.000</div>
+      </a>
+      <a href="https://shopee.co.id" class="cat-card" target="_blank" rel="noopener">
+        <div>
+          <div class="cat-icon ci-2">📿</div>
+          <h3>Necklace</h3>
+          <p>Kalung dengan pendant unik dan kombinasi bead yang berbeda tiap batch-nya. Terbatas!</p>
+        </div>
+        <div class="cat-price">mulai Rp 45.000</div>
+      </a>
+      <a href="https://shopee.co.id" class="cat-card" target="_blank" rel="noopener">
+        <div>
+          <div class="cat-icon ci-3">🎁</div>
+          <h3>Custom Order</h3>
+          <p>Pilih warna, tema, dan karakter. Bisa untuk hadiah ultah, anniversary, atau paket couple.</p>
+        </div>
+        <div class="cat-price">harga menyesuaikan</div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- HOW TO ORDER -->
+<section>
+  <p class="section-label">cara order</p>
+  <h2 class="section-title">gampang, <em>nggak ribet</em></h2>
+  <div class="process-inner">
+    <div class="process-steps">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>Cek koleksi yang available</h4>
+          <p>Lihat di fitur repost IG atau langsung ke Shopee. Produk terbatas, jadi gerak cepat ya!</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>Pilih item favoritmu</h4>
+          <p>Bisa pilih satu atau beberapa sekaligus. Nggak ada minimum order.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>Order via Shopee atau DM</h4>
+          <p>Checkout langsung di Shopee untuk lebih aman, atau DM Instagram untuk custom order.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h4>Pesanan disiapkan & dikirim</h4>
+          <p>Dipacking dengan hati-hati dan dikirim ke seluruh Indonesia. Done!</p>
+        </div>
+      </div>
+    </div>
+    <div class="process-aside">
+      <h3>Format Order Custom</h3>
+      <div class="format-line"><strong>Nama:</strong> nama/nickname kamu</div>
+      <div class="format-line"><strong>Jenis:</strong> gelang / kalung</div>
+      <div class="format-line"><strong>Tema warna:</strong> misalnya "biru-putih laut"</div>
+      <div class="format-line"><strong>Referensi:</strong> foto atau deskripsi feel</div>
+      <div class="format-line"><strong>Deadline:</strong> ada deadline atau tidak</div>
+      <div class="format-line"><strong>Budget:</strong> biar bisa disesuaikan</div>
+      <a href="https://www.instagram.com/kozebie" class="btn-primary" target="_blank" rel="noopener">DM untuk custom →</a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<div class="section-wrapper">
+  <div class="testi-section">
+    <p class="section-label">kata mereka</p>
+    <h2 class="section-title">yang sudah <em>punya kozebie</em></h2>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div>
+          <div class="testi-stars" aria-label="5 dari 5 bintang">
+            <div class="star"></div><div class="star"></div><div class="star"></div>
+            <div class="star"></div><div class="star"></div>
+          </div>
+          <p class="testi-text">"Packingan rapi banget, gelangnya bagus dan sesuai foto. Udah repeat order 3x dan nggak pernah kecewa!"</p>
+        </div>
+        <div>
+          <div class="testi-author">@annisapr_</div>
+          <div class="testi-platform">via Instagram</div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div>
+          <div class="testi-stars" aria-label="5 dari 5 bintang">
+            <div class="star"></div><div class="star"></div><div class="star"></div>
+            <div class="star"></div><div class="star"></div>
+          </div>
+          <p class="testi-text">"Custom order buat hadiah pacar, dikasih tau mau warna apa dan hasilnya melebihi ekspektasi banget. Recommended!"</p>
+        </div>
+        <div>
+          <div class="testi-author">@rizkymf</div>
+          <div class="testi-platform">via Shopee Review</div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div>
+          <div class="testi-stars" aria-label="5 dari 5 bintang">
+            <div class="star"></div><div class="star"></div><div class="star"></div>
+            <div class="star"></div><div class="star"></div>
+          </div>
+          <p class="testi-text">"Suka banget sama vibes koleksi kozebie. Tiap batch selalu ada yang bikin pengen beli lagi. Harga juga worth it!"</p>
+        </div>
+        <div>
+          <div class="testi-author">@dindaelvira</div>
+          <div class="testi-platform">via Instagram Story</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CUSTOM ORDER -->
+<section id="custom">
+  <div class="custom-inner">
+    <div class="custom-text">
+      <p class="section-label">custom order</p>
+      <h2 class="section-title">buat yang <em>cuma ada satu</em></h2>
+      <p>Mau gelang dengan warna favoritmu? Kalung buat hadiah dengan nama orang spesial? Atau paket couple yang matching?</p>
+      <p>Custom order kozebie terbuka — ceritain aja mau kayak gimana, kita bikin bareng.</p>
+      <div class="custom-tags">
+        <span class="tag">🌊 tema laut</span>
+        <span class="tag">🌸 pastel girly</span>
+        <span class="tag">🌑 dark aesthetic</span>
+        <span class="tag">💎 crystal vibes</span>
+        <span class="tag">🎨 colorful pop</span>
+        <span class="tag">🍂 earthy tones</span>
+      </div>
+      <div style="margin-top: 28px;">
+        <a href="https://www.instagram.com/kozebie" class="btn-primary" target="_blank" rel="noopener">mulai custom order</a>
+      </div>
+    </div>
+    <div class="custom-img-stack" aria-hidden="true">
+      <div class="stack-card sc-1">🫐</div>
+      <div class="stack-card sc-2">🌸</div>
+      <div class="stack-card sc-3">✨</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <p class="section-label">faq</p>
+  <h2 class="section-title">pertanyaan <em>yang sering ditanya</em></h2>
+  <div class="faq-inner">
+    <details>
+      <summary>Berapa lama proses pengerjaan custom order?</summary>
+      <p>Biasanya 3–7 hari kerja tergantung antrian dan tingkat kesulitan desain. Kalau ada deadline, info di awal ya supaya bisa diprioritaskan!</p>
+    </details>
+    <details>
+      <summary>Bisa request warna atau bead tertentu?</summary>
+      <p>Bisa banget! Tinggal ceritain tema warna yang kamu mau, atau share foto referensi. Kita usahain semirip mungkin dengan bahan yang tersedia.</p>
+    </details>
+    <details>
+      <summary>Apakah ada garansi produk?</summary>
+      <p>Ada. Kalau produk rusak dalam 7 hari setelah diterima (bukan karena pemakaian), bisa diklaim dengan foto bukti. Kami prioritasin kepuasan pembeli.</p>
+    </details>
+    <details>
+      <summary>Apakah gelang/kalung ini tahan air?</summary>
+      <p>Rantainya silver-plated, jadi sebaiknya hindari kontak langsung dengan air, parfum, atau keringat berlebihan agar tetap awet dan mengkilap.</p>
+    </details>
+    <details>
+      <summary>Bisa kirim ke luar kota?</summary>
+      <p>Bisa ke seluruh Indonesia lewat Shopee. Packing aman dan sudah ratusan order terkirim tanpa masalah.</p>
+    </details>
+    <details>
+      <summary>Kapan batch baru dibuka?</summary>
+      <p>Update batch diumumkan lewat Instagram story dan feed. Follow @kozebie dan aktifkan notifikasi supaya nggak ketinggalan!</p>
+    </details>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    <a href="#" class="nav-logo">kozebie</a>
+    <p>bracelets, necklaces, accessories you need 💙 SMI</p>
+  </div>
+  <ul class="footer-links">
+    <li><a href="#about">about</a></li>
+    <li><a href="#catalog">catalog</a></li>
+    <li><a href="#custom">custom</a></li>
+    <li><a href="#faq">faq</a></li>
+  </ul>
+  <a href="https://www.instagram.com/kozebie" class="footer-ig" target="_blank" rel="noopener">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+    @kozebie
+  </a>
+</footer>
+
+<!-- SCRIPT FOR MOBILE MENU & INTERACTIONS -->
+<script>
+  (function() {
+    const navToggle = document.getElementById('navToggle');
+    const mobileOverlay = document.getElementById('mobileOverlay');
+    const navIcon = document.getElementById('navIcon');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+    let isOpen = false;
+
+    function toggleMenu() {
+      isOpen = !isOpen;
+      navToggle.setAttribute('aria-expanded', isOpen);
+      mobileOverlay.setAttribute('aria-hidden', !isOpen);
+      
+      if (isOpen) {
+        mobileOverlay.classList.add('active');
+        document.body.classList.add('menu-open');
+        navIcon.innerHTML = '<path d="M18 6L6 18M6 6l12 12"/>';
+      } else {
+        mobileOverlay.classList.remove('active');
+        document.body.classList.remove('menu-open');
+        navIcon.innerHTML = '<path d="M4 6h16M4 12h16M4 18h16"/>';
+      }
+    }
+
+    navToggle.addEventListener('click', toggleMenu);
+
+    mobileNavLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if (isOpen) toggleMenu();
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
